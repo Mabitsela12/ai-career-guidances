@@ -135,7 +135,9 @@ def create_pdf(cv_content):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", size=12)
-    pdf.multi_cell(0, 10, cv_content)
+    
+    # Handle multi-line content with Unicode text
+    pdf.multi_cell(0, 10, cv_content.encode('latin-1', 'replace').decode('latin-1'))
     
     # Write the PDF to a string buffer
     buffer = BytesIO()
@@ -206,35 +208,23 @@ def main():
         unsafe_allow_html=True
     )
 
-    # Language selection
-    lang = st.selectbox("Select Language", ["English", "Afrikaans", "Zulu", "Xhosa", "Sepedi", "Setswana", "Sesotho", "Xitsonga", "SiSwati", "Tshivenda"])
-    lang_code = {
-        "English": "en",
-        "Afrikaans": "af",
-        "Zulu": "zu",
-        "Xhosa": "xh",
-        "Sepedi": "nso",
-        "Setswana": "tn",
-        "Sesotho": "st",
-        "Xitsonga": "ts",
-        "SiSwati": "ss",
-        "Tshivenda": "ve"
-    }.get(lang, "en")
+    st.title(texts["title"])
+    st.write(texts["welcome_message"])
 
-    # Translate texts
-    translated_texts = {key: translate_text(value, lang_code) if isinstance(value, str) else [translate_text(q, lang_code) for q in value] for key, value in texts.items()}
+    # Interview Preparation
+    st.subheader(texts["interview_prep_header"])
+    st.write(texts["welcome_message"])
 
-    st.title(translated_texts["title"])
+    st.subheader(texts["common_questions_header"])
+    for question in texts["common_questions"]:
+        st.write(f"- {question}")
 
-    # Interview Preparation Section
-    st.header(translated_texts["interview_prep_header"])
-    st.markdown(translated_texts["welcome_message"])
+    st.subheader(texts["interview_tips_header"])
+    for tip in texts["interview_tips"]:
+        st.write(f"- {tip}")
 
-    st.subheader(translated_texts["common_questions_header"])
-    st.write(translated_texts["common_questions"])
-
-    st.subheader(translated_texts["interview_tips_header"])
-    st.write(translated_texts["interview_tips"])
+    st.subheader(texts["mock_interview_header"])
+    st.write("Enter your question for the mock interview:")
 
     user_question = st.text_input("Ask an interview question:")
     if st.button("Simulate Interview"):
@@ -246,12 +236,12 @@ def main():
             st.write("Please enter a question.")
 
     # Career Selection and CV Upload
-    st.subheader(translated_texts["career_selection_header"])
+    st.subheader(texts["career_selection_header"])
     careers = ["Software Developer", "Data Scientist", "Nurse", "Teacher", "Other"]
     selected_career = st.selectbox("Select Career", careers)
     st.write("Selected Career:", selected_career)
 
-    uploaded_file = st.file_uploader(translated_texts["upload_cv_header"], type=["pdf", "docx"])
+    uploaded_file = st.file_uploader(texts["upload_cv_header"], type=["pdf", "docx"])
     if uploaded_file:
         cv_text = extract_text_from_cv(uploaded_file)
         if cv_text:
