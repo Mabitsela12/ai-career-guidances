@@ -194,17 +194,19 @@ texts = {
 
 # Streamlit app
 def main():
-    # Display the picture and multilingual support header
+    # Display the picture at the top
     picture_url = "https://raw.githubusercontent.com/Mabitsela12/ai-career-guidances/main/code%20image.jpg"
     st.markdown(
         f"""
-        <div style="display: flex; align-items: center;">
-            <h2 style="margin-right: 10px;">{texts["multilingual_support_header"]}</h2>
-            <img src="{picture_url}" style="width: 100px; height: auto;" />
+        <div style="text-align: center;">
+            <img src="{picture_url}" style="width: 200px; height: auto;" />
         </div>
         """,
         unsafe_allow_html=True
     )
+
+    # Display Multilingual Support header
+    st.header(texts["multilingual_support_header"])
 
     # Language selection
     lang = st.selectbox("Select Language", ["English", "Afrikaans", "Zulu", "Xhosa", "Sepedi", "Setswana", "Sesotho", "Xitsonga", "SiSwati", "Tshivenda"])
