@@ -194,7 +194,7 @@ texts = {
 
 # Streamlit app
 def main():
-    # Display the picture
+    # Display the picture and multilingual support header
     picture_url = "https://raw.githubusercontent.com/Mabitsela12/ai-career-guidances/main/code%20image.jpg"
     st.markdown(
         f"""
@@ -206,7 +206,7 @@ def main():
         unsafe_allow_html=True
     )
 
-    st.subheader(texts["multilingual_support_header"])
+    # Language selection
     lang = st.selectbox("Select Language", ["English", "Afrikaans", "Zulu", "Xhosa", "Sepedi", "Setswana", "Sesotho", "Xitsonga", "SiSwati", "Tshivenda"])
     lang_code = {
         "English": "en",
@@ -224,9 +224,9 @@ def main():
     # Translate texts
     translated_texts = {key: translate_text(value, lang_code) if isinstance(value, str) else [translate_text(q, lang_code) for q in value] for key, value in texts.items()}
 
-    
     st.title(translated_texts["title"])
 
+    # Interview Preparation Section
     st.header(translated_texts["interview_prep_header"])
     st.markdown(translated_texts["welcome_message"])
 
@@ -236,6 +236,7 @@ def main():
     st.subheader(translated_texts["interview_tips_header"])
     st.write(translated_texts["interview_tips"])
 
+    # Mock Interview Simulator
     st.subheader(translated_texts["mock_interview_header"])
     user_question = st.text_input("Ask an interview question:")
     if st.button("Simulate Interview"):
@@ -245,7 +246,8 @@ def main():
             st.write("AI's Response:", ai_response)
         else:
             st.write("Please enter a question.")
-    
+
+    # Career Selection and CV Upload
     st.subheader(translated_texts["career_selection_header"])
     careers = ["Software Developer", "Data Scientist", "Nurse", "Teacher", "Other"]
     selected_career = st.selectbox("Select Career", careers)
@@ -257,16 +259,18 @@ def main():
         if cv_text:
             st.text_area("CV Content", cv_text, height=200)
 
+            # Generate Career Overview
             if st.button("Generate Career Overview"):
                 with st.spinner("Generating career overview..."):
                     overview = generate_career_overview(selected_career)
                 st.write("Career Overview:", overview)
 
+            # Generate Refined CV
             if st.button("Generate Refined CV"):
                 with st.spinner("Generating refined CV..."):
                     refined_cv = generate_refined_cv(cv_text, selected_career)
                 st.write("Refined CV:", refined_cv)
-                
+
                 # Provide options to download refined CV
                 pdf_buffer = create_pdf(refined_cv)
                 st.download_button("Download PDF", pdf_buffer, file_name="Refined_CV.pdf", mime="application/pdf")
@@ -274,6 +278,7 @@ def main():
                 word_buffer = create_word(refined_cv)
                 st.download_button("Download Word Document", word_buffer, file_name="Refined_CV.docx", mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
+            # Recommend Jobs
             if st.button("Recommend Jobs"):
                 with st.spinner("Recommending jobs..."):
                     recommended_jobs = recommend_jobs(selected_career, cv_text)
@@ -281,5 +286,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-   
