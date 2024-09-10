@@ -136,9 +136,13 @@ def create_pdf(cv_content):
     pdf.add_page()
     pdf.set_font("Arial", size=12)
     pdf.multi_cell(0, 10, cv_content)
+    
+    # Write the PDF to a string buffer
     buffer = BytesIO()
-    pdf.output(buffer)
+    pdf_output = pdf.output(dest='S')  # Write PDF to string
+    buffer.write(pdf_output)
     buffer.seek(0)
+    
     return buffer
 
 # Function to generate Word file (DOCX)
