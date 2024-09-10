@@ -197,7 +197,8 @@ def main():
 
     def main():
     # Upload or URL of your picture
-    picture_path = "https://github.com/Mabitsela12/ai-career-guidances/blob/main/code%20image.jpg"  # Change this to the path of your picture file
+    picture_url = "https://raw.githubusercontent.com/Mabitsela12/ai-career-guidances/main/code%20image.jpg"
+      # Change this to the path of your picture file
     st.image(picture_path, use_column_width=True)  # Display your picture
 
     st.subheader(texts["multilingual_support_header"])
