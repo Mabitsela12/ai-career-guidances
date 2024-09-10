@@ -197,7 +197,7 @@ def main():
 
     def main():
     # Upload or URL of your picture
-    picture_path = "ai-career-guidances/code image.jpg"  # Change this to the path of your picture file
+    picture_path = ""C:\Users\USER\career ai\code image.jpg""  # Change this to the path of your picture file
     st.image(picture_path, use_column_width=True)  # Display your picture
 
     st.subheader(texts["multilingual_support_header"])
