@@ -196,7 +196,15 @@ texts = {
 def main():
     # Display the picture
     picture_url = "https://raw.githubusercontent.com/Mabitsela12/ai-career-guidances/main/code%20image.jpg"
-    st.image(picture_url, use_column_width=True)
+    st.markdown(
+        f"""
+        <div style="display: flex; align-items: center;">
+            <h2 style="margin-right: 10px;">{texts["multilingual_support_header"]}</h2>
+            <img src="{picture_url}" style="width: 100px; height: auto;" />
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
     st.subheader(texts["multilingual_support_header"])
     lang = st.selectbox("Select Language", ["English", "Afrikaans", "Zulu", "Xhosa", "Sepedi", "Setswana", "Sesotho", "Xitsonga", "SiSwati", "Tshivenda"])
@@ -274,76 +282,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-    st.subheader(texts["multilingual_support_header"])
-    lang = st.selectbox("Select Language", ["English", "Afrikaans", "Zulu", "Xhosa", "Sepedi", "Setswana", "Sesotho", "Xitsonga", "SiSwati", "Tshivenda"])
-    lang_code = {
-        "English": "en",
-        "Afrikaans": "af",
-        "Zulu": "zu",
-        "Xhosa": "xh",
-        "Sepedi": "nso",
-        "Setswana": "tn",
-        "Sesotho": "st",
-        "Xitsonga": "ts",
-        "SiSwati": "ss",
-        "Tshivenda": "ve"
-    }.get(lang, "en")
-
-    translated_texts = {key: translate_text(value, lang_code) if isinstance(value, str) else [translate_text(q, lang_code) for q in value] for key, value in texts.items()}
-
-    st.title(translated_texts["title"])
-
-    st.header(translated_texts["interview_prep_header"])
-    st.markdown(translated_texts["welcome_message"])
-
-    st.subheader(translated_texts["common_questions_header"])
-    st.write(translated_texts["common_questions"])
-
-    st.subheader(translated_texts["interview_tips_header"])
-    st.write(translated_texts["interview_tips"])
-
-    st.subheader(translated_texts["mock_interview_header"])
-    user_question = st.text_input("Ask an interview question:")
-    if st.button("Simulate Interview"):
-        if user_question:
-            with st.spinner("Generating interview response..."):
-                ai_response = generate_mock_interview_response(user_question)
-            st.write("AI's Response:", ai_response)
-        else:
-            st.write("Please enter a question.")
-    
-    st.subheader(translated_texts["career_selection_header"])
-    careers = ["Software Developer", "Data Scientist", "Nurse", "Teacher", "Other"]
-    selected_career = st.selectbox("Select Career", careers)
-    st.write("Selected Career:", selected_career)
-
-    uploaded_file = st.file_uploader(translated_texts["upload_cv_header"], type=["pdf", "docx"])
-    if uploaded_file:
-        cv_text = extract_text_from_cv(uploaded_file)
-        if cv_text:
-            st.text_area("CV Content", cv_text, height=200)
-
-            if st.button("Generate Career Overview"):
-                with st.spinner("Generating career overview..."):
-                    overview = generate_career_overview(selected_career)
-                st.write("Career Overview:", overview)
-
-            if st.button("Generate Refined CV"):
-                with st.spinner("Generating refined CV..."):
-                    refined_cv = generate_refined_cv(cv_text, selected_career)
-                st.write("Refined CV:", refined_cv)
-                
-                # Provide options to download refined CV
-                pdf_buffer = create_pdf(refined_cv)
-                st.download_button("Download PDF", pdf_buffer, file_name="Refined_CV.pdf", mime="application/pdf")
-                
-                word_buffer = create_word(refined_cv)
-                st.download_button("Download Word Document", word_buffer, file_name="Refined_CV.docx", mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-
-            if st.button("Recommend Jobs"):
-                with st.spinner("Recommending jobs..."):
-                    recommended_jobs = recommend_jobs(selected_career, cv_text)
-                st.write("Recommended Jobs:", recommended_jobs)
-
-if __name__ == "__main__":
-    main()
+   
