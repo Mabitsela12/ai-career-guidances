@@ -131,19 +131,26 @@ def generate_mock_interview_response(question):
         st.error(f"Error generating mock interview response: {e}")
 
 # Function to generate PDF file
+from io import BytesIO
+from fpdf import FPDF
+
+# Function to generate PDF file
 def create_pdf(cv_content):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", size=12)
-    pdf.multi_cell(0, 10, cv_content)
+
+    # Handle multi-line content with Unicode text
+    pdf.multi_cell(0, 10, cv_content.encode('latin-1', 'replace').decode('latin-1'))
     
     # Write the PDF to a string buffer
     buffer = BytesIO()
-    pdf_output = pdf.output(dest='S').encode('latin1')  # Write PDF to string
+    pdf_output = pdf.output(dest='S')
     buffer.write(pdf_output)
     buffer.seek(0)
     
     return buffer
+
 
 # Function to generate Word file (DOCX)
 def create_word(cv_content):
