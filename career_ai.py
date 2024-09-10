@@ -194,12 +194,9 @@ texts = {
 
 # Streamlit app
 def main():
-
-    def main():
-    # Upload or URL of your picture
+    # Display the picture
     picture_url = "https://raw.githubusercontent.com/Mabitsela12/ai-career-guidances/main/code%20image.jpg"
-      # Change this to the path of your picture file
-    st.image(picture_path, use_column_width=True)  # Display your picture
+    st.image(picture_url, use_column_width=True)
 
     st.subheader(texts["multilingual_support_header"])
     lang = st.selectbox("Select Language", ["English", "Afrikaans", "Zulu", "Xhosa", "Sepedi", "Setswana", "Sesotho", "Xitsonga", "SiSwati", "Tshivenda"])
@@ -216,8 +213,10 @@ def main():
         "Tshivenda": "ve"
     }.get(lang, "en")
 
+    # Translate texts
     translated_texts = {key: translate_text(value, lang_code) if isinstance(value, str) else [translate_text(q, lang_code) for q in value] for key, value in texts.items()}
 
+    
     st.title(translated_texts["title"])
 
     st.header(translated_texts["interview_prep_header"])
