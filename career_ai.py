@@ -194,19 +194,17 @@ texts = {
 
 # Streamlit app
 def main():
-    # Display the picture at the top
+    # Display the picture and "Multilingual Support" header on the same line
     picture_url = "https://raw.githubusercontent.com/Mabitsela12/ai-career-guidances/main/code%20image.jpg"
     st.markdown(
         f"""
-        <div style="text-align: center;">
-            <img src="{picture_url}" style="width: 200px; height: auto;" />
+        <div style="display: flex; align-items: center;">
+            <img src="{picture_url}" style="width: 100px; height: auto; margin-right: 10px;" />
+            <h1>{texts["multilingual_support_header"]}</h1>
         </div>
         """,
         unsafe_allow_html=True
     )
-
-    # Display Multilingual Support header
-    st.header(texts["multilingual_support_header"])
 
     # Language selection
     lang = st.selectbox("Select Language", ["English", "Afrikaans", "Zulu", "Xhosa", "Sepedi", "Setswana", "Sesotho", "Xitsonga", "SiSwati", "Tshivenda"])
@@ -238,8 +236,6 @@ def main():
     st.subheader(translated_texts["interview_tips_header"])
     st.write(translated_texts["interview_tips"])
 
-    # Mock Interview Simulator
-    st.subheader(translated_texts["mock_interview_header"])
     user_question = st.text_input("Ask an interview question:")
     if st.button("Simulate Interview"):
         if user_question:
