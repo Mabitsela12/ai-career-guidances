@@ -166,7 +166,6 @@ def translate_text(text, lang_code):
     except Exception as e:
         st.error(f"Translation Error: {e}")
         return text
-
 # Define all texts used in the system
 texts = {
     "title": "AI-Powered Career Guidance System",
@@ -193,6 +192,8 @@ texts = {
     "upload_cv_header": "Upload your CV",
     "multilingual_support_header": "Multilingual Support"
 }
+
+
 
 # Streamlit app
 def main():
