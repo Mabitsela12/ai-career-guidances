@@ -139,7 +139,7 @@ def create_pdf(cv_content):
     
     # Write the PDF to a string buffer
     buffer = BytesIO()
-    pdf_output = pdf.output(dest='S')  # Write PDF to string
+    pdf_output = pdf.output(dest='S').encode('latin1')  # Write PDF to string
     buffer.write(pdf_output)
     buffer.seek(0)
     
